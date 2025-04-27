@@ -1,0 +1,527 @@
+\documentclass[10pt,a4paper]{exam}
+\usepackage[british]{babel}
+% \usepackage{polyglossia}
+% \setdefaultlanguage{english}
+% \setotherlanguage{greek}
+
+\usepackage[margin=2cm]{geometry}
+\usepackage{amsmath,amssymb,amstext,amsthm,amscd,array,xcolor,pifont}
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
+\setmainfont[
+Path =/usr/share/texmf-dist/fonts/opentype/public/tex-gyre-math/,
+Extension = .otf,
+]{texgyrepagella-math.otf}
+% \setmainfont[
+% Path =/usr/share/texmf-dist/fonts/opentype/public/tex-gyre-math/,
+% Extension = .otf,
+% ]{TeX Gyre Pagella}
+\usepackage[math-style=french]{unicode-math}
+% \setmathfont{texgyrepagella-math.otf}
+\usepackage{xunicode} % for unicode accents
+%
+\usepackage{mathrsfs}
+%
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{calc,arrows}
+\usetikzlibrary{decorations.markings}
+%
+\usepackage{wrapfig}
+\usepackage{subcaption,enumitem}
+\usepackage{relsize}
+%
+%\usepackage{titlesec}
+\usepackage{version,ifthen}
+%
+% this is for external references: it allows me to have \ref's whose
+% \label's are in the Lecture notes
+%
+\usepackage{xr}
+% \externaldocument{../Lectures/DGGR}
+%
+\usepackage[framemethod=TiKZ]{mdframed}
+\makeatletter
+\def\exam@MakeFramed#1{\begin{mdframed}}
+\def\endexam@MakeFramed{\end{mdframed}}
+\makeatother
+%
+\renewcommand{\subpartlabel}{(\thesubpart)}
+%
+\usepackage{hyperref}
+\hypersetup{%
+  pdftitle   = {GGR Workshop 2},
+  pdfkeywords = {Conformal infinity},
+  pdfauthor  = {José Figueroa-O'Farrill},
+  pdfcreator = {\LaTeX\ with package ``hyperref''}
+}
+%
+\definecolor{darkblue}{rgb}{0,0,0.6}
+\definecolor{darkred}{rgb}{0.6,0,0}
+\definecolor{darkgreen}{rgb}{0,0.6,0}
+\definecolor{shadecolor}{rgb}{0.8,0,0.8}
+%
+\let\d\partial
+\newcommand{\ttl}[1]{{\color{darkblue}\sffamily\bfseries\larger #1}}
+\newcommand{\sttl}[1]{{\color{darkblue}\sffamily\bfseries #1}}
+\newcommand{\doit}[1]{{\color{darkgreen}\sffamily\bfseries #1}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\VV}{\mathbb{V}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\be}{\mathbf{e}}
+\newcommand{\beff}{\mathbf{f}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bu}{\mathbf{u}}
+\newcommand{\eL}{\mathcal{L}}
+\newcommand{\eX}{\mathcal{X}}
+\newcommand{\eT}{\mathcal{T}}
+\DeclareMathOperator{\Ort}{O}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\SO}{SO}
+\DeclareMathOperator{\grad}{grad}
+\newcommand{\Ggr}{\mathcal{G}}
+\newcommand{\V}{\mathscr{X}}
+\newcommand{\F}{C^\infty}
+\newcommand{\pder}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\der}[2]{\frac{d #1}{d #2}}
+\newcommand{\scri}{\mathscr{I}}
+\newcommand{\esu}{\mathscr{E}}
+%
+\pagestyle{headandfoot}
+\firstpageheader{\ttl{GGR}}{\ttl{Workshop 2}}{\ttl{31/1/2025}}
+\runningheader{}{}{}
+\firstpagefooter{}{}{}
+\runningfooter{}{}{}
+%
+\marksnotpoints
+%
+% answers?
+%
+% commenting out the line below will typeset the answers as well
+\def\withanswers{1}
+\ifdefined\withanswers
+  \printanswers
+\else
+  \relax
+\fi
+%
+\begin{document}
+
+\begin{center}\large
+  \textsc{Conformal infinity}
+\end{center}
+
+Let $(M,g)$ be a lorentzian manifold.  Let $\omega \in \F(M)$ and let
+$\widehat g = e^{2\omega} g$.  Since $e^{2\omega}$ is a positive function,
+$\widehat g$ is also a lorentzian metric.  We say that $g$ and $\widehat g$
+are \sttl{conformally related}.  Let $\nabla$ and $\hat\nabla$ denote
+the Levi-Civita connections of $g$ and $\widehat g$, respectively.
+Let $K \in \Omega^1(M;\End(TM))$ be defined by
+\begin{equation*}
+  X \mapsto K_X \qquad\text{where}\qquad K_XY := \hat\nabla_X Y - \nabla_X Y,
+\end{equation*}
+for all $X,Y \in \V(M)$.
+
+\begin{questions}
+
+\question Following the steps below, show that
+  \begin{equation}\label{eq:k}
+    K_X Y = X(\omega) Y + Y(\omega) X - g(X,Y) \grad\omega,
+  \end{equation}
+  where the \sttl{gradient} $\grad\omega$ of $\omega$ is the metric dual
+  of $d\omega \in \Omega^1(M)$; that is,
+  \begin{equation*}
+    g(\grad\omega, Z) = d\omega(Z) = Z(\omega) \qquad\text{for all}\qquad Z \in \V(M).
+  \end{equation*}
+
+  \begin{parts}
+  \part Using that both $\hat\nabla$ and $\nabla$ are torsion-free,
+    \doit{show} that
+    \begin{equation}
+      \label{eq:k-symm}
+      K_X Y = K_Y X \qquad\text{for all $X,Y \in \V(M)$.}
+    \end{equation}
+
+    \begin{solution}
+      We use that $\hat\nabla$ and $\nabla$ are torsion-free:
+      \begin{align*}
+        0 &= \hat\nabla_X Y - \hat\nabla_Y X - [X,Y] && \tag{since $\hat\nabla$ is torsion-free}\\
+          &= \nabla_X Y - \nabla_Y X - [X,Y] + K_X Y - K_Y X && \tag{definition of $K$}\\
+          &= K_X Y - K_Y Z, && \tag{since $\nabla$ is torsion-free}
+      \end{align*}
+      from where equation~\eqref{eq:k-symm} follows.
+    \end{solution}
+
+    \part Using that $\hat\nabla\widehat g= 0$ and $\nabla g = 0$, \doit{show}
+      that
+      \begin{equation}
+        \label{eq:k-aux-xyz}
+        g(K_X Y, Z) + g(Y, K_X Z) = 2 X(\omega) g(Y,Z) \qquad\text{for all
+          $X,Y,Z \in \V(M)$.}
+      \end{equation}
+      
+      \begin{solution}
+        Now we use that $\hat\nabla \widehat g = 0$, so that for all
+        $X,Y,Z \in \V(M)$,
+        \begin{align*}
+          0 = (\hat\nabla_X \widehat g)(Y,Z) &= X \widehat g(Y,Z) - \widehat g(\hat\nabla_X Y,Z ) - \widehat g(Y, \hat\nabla_X Z)\\
+                                         &= X(e^{2\omega} g(Y,Z)) - e^{2\omega} g (\nabla_X Y + K_X Y, Z) - e^{2\omega} g (Y, \nabla_X Z + K_X Z)\\
+                                         &= 2 e^{2\omega} X(\omega) g(Y,Z) +  e^{2\omega}\left( X g(Y,Z) - g(\nabla_X Y,Z) - g(Y,\nabla_X Z)\right)\\
+                                         & \qquad {} - e^{2\omega} \left(g(K_X Y, Z) + g(Y, K_X Z) \right)\\
+                                         &= e^{2\omega} \left(  2 X(\omega) g(Y,Z) - g(K_X Y, Z) - g(Y, K_X Z)\right), && \tag{since $\nabla g = 0$}
+        \end{align*}
+        from where equation~\eqref{eq:k-aux-xyz} follows.
+      \end{solution}
+      
+    \part Using equations~\eqref{eq:k-symm} and \eqref{eq:k-aux-xyz},
+      \doit{derive} equation~\eqref{eq:k}.\\
+      (\emph{Hint}: Mimic the derivation of the Koszul formula for the
+      Levi-Civita connection.)
+      
+      \begin{solution}
+        We now take equation~\eqref{eq:k-aux-xyz} and we write two more
+        equations by cyclically permuting $X,Y,Z$:
+        \begin{equation}\label{eq:k-aux-yzx}
+          g(K_Y Z, X) + g(Z, K_Y X) = 2 Y(\omega) g(Z,X)
+        \end{equation}
+        and
+        \begin{equation}\label{eq:k-aux-zxy}
+          g(K_Z X, Y) + g(X, K_Z Y) = 2 Z(\omega) g(X,Y).
+        \end{equation}
+        We now subtract equation~\eqref{eq:k-aux-zxy} from the sum of
+        equations~\eqref{eq:k-aux-xyz} and \eqref{eq:k-aux-yzx}.
+        Using equation~\eqref{eq:k-symm}, this results in
+        \begin{align*}
+          g(K_XY , Z) &= X(\omega) g(Y,Z) + Y(\omega) g(X,Z) - Z(\omega)  g(X,Y)\\
+                      &= g( X(\omega) Y + Y(\omega) X - g(X,Y) \grad\omega, Z),
+        \end{align*}
+        which, since it is true for all $Z\in\V(M)$, is precisely
+        equation~\eqref{eq:k}.
+      \end{solution}
+  \end{parts}
+
+  \begin{EnvUplevel}
+  \end{EnvUplevel}
+
+\question Let $I = [0,1]$ and let $\gamma: I \to M$ be a smooth curve.
+  Let $\gamma^*TM \to I$ be the pull-back bundle, whose sections we
+  interpret as ``vector fields along $\gamma$''.  Let $\frac{\widehat
+    D}{dt}$ and $\frac{D}{dt}$ denote the covariant derivatives acting
+  on vector fields along $\gamma$, associated with $\hat\nabla$ and
+  $\nabla$, respectively.
+
+  \begin{parts}
+  \part Let $Y \in \Gamma(\gamma^*TM)$.  \doit{Show} that
+    \begin{equation*}
+      \frac{\widehat D Y}{dt} = \frac{D Y}{dt} + K_{\dot\gamma} Y,
+    \end{equation*}
+    where we are abusing notation slightly and writing
+    $K_{\dot\gamma}$ even when $\dot \gamma$ is not a vector field on
+    $M$, but $K$ is a tensor and hence it can be restricted to a
+    curve.\\
+    (\emph{Hint:} It is enough to prove this for $Y = f \gamma^*Z$ for
+    some $f \in \F(I)$ and $Z \in \V(M)$. Why?)
+
+    \begin{solution}
+      By linearity of the covariant derivative and the fact that locally every section of $\gamma^*TM$ is a linear combination (with coefficients in $\F(I)$) of pull-backs of sections of $TM$, it is enough to prove the identity for $Y = f \gamma^*Z$ as in the hint.
+      So let $f \in \F(I)$, $Z \in \V(M)$ and consider $Y = f \gamma^*Z$.  Calculating
+      \begin{align*}
+        \frac{\widehat D}{dt}(f \gamma^* Z) &= \der{f}{t} \gamma^*Z + f \gamma^*(\hat\nabla_{\dot\gamma} Z)\\
+                                             &= \der{f}{t} \gamma^*Z + f \gamma^*(\nabla_{\dot\gamma} Z) + f \gamma^*(K_{\dot\gamma}Z)\\
+                                             &= \frac{D}{dt} (f \gamma^* Z) + f \gamma^*(K_{\dot\gamma} Z) \\
+                                             &= \frac{D}{dt} (f \gamma^*Z) + K_{\dot\gamma} (f \gamma^* Z).
+      \end{align*}
+    \end{solution}
+
+    \part \doit{Show} that if $\gamma : I \to M$ is a null geodesic with
+      respect to $g$, it is also a null geodesic with respect to $\widehat
+      g$. (These geodesics need not be affinely parametrised and
+      recall that $\gamma$ being null with respect to a metric $g$
+      means that $g(\dot\gamma,\dot\gamma) = 0$.)
+
+      \begin{solution}
+        First of all $\widehat g (\dot\gamma,\dot\gamma) = e^{2\omega}
+        g(\dot\gamma,\dot\gamma)$, so that if $\dot\gamma$ is null
+        relative to $g$ it is also null relative to $\widehat g$ (and
+        viceversa).  Now let us calculate
+        \begin{align*}
+          \frac{\widehat D \dot\gamma}{dt} &= \frac{D\dot\gamma}{dt} +  K_{\dot\gamma} \dot\gamma && \tag{from part (a)}\\
+                                       &= f \dot\gamma +  K_{\dot\gamma} \dot\gamma && \tag{$\exists f \in \F(I)$, since $\gamma$ is a $\nabla$-geodesic}\\
+                                       &= f \dot\gamma + 2 \dot\gamma(\omega) \dot\gamma && \tag{by \eqref{eq:k} and $g(\dot\gamma,\dot\gamma)=0$}\\
+                                       &= (f + 2 \der{~}{t}(\omega \circ \gamma)) \dot\gamma, && \tag{since $\dot\gamma = \gamma_*(\der{~}{t})$}
+        \end{align*}
+        which shows that $\gamma$ is a $\hat\nabla$-geodesic; although not necessarily affinely parametrised.
+      \end{solution}
+  \end{parts}
+
+\question Now let $(M, g)$ denote four-dimensional Minkowski
+  spacetime.  Relative to the global cartesian coordinates
+  $(t,x,y,z)$, the metric takes the form
+  \begin{equation*}
+    g = -dt^2 + dx^2 + dy^2 + dz^2.
+  \end{equation*}
+  Notice that $t$ here is one of the global coordinates of Minkowski
+  spacetime and not the parameter along a curve.
+  
+  Let us introduce spherical polar coordinates $(r,\theta,\phi)$ with
+  \begin{equation*}
+      x = r \sin\theta\cos\phi, \qquad y = r \sin\theta\sin\phi \qquad\text{and}\qquad  z = r \cos\theta,
+  \end{equation*}
+  relative to which the metric takes the form
+  \begin{equation}\label{eq:mink-polar}
+    g = -dt^2 + dr^2 + r^2 (d\theta^2 + \sin^2\theta d\phi^2),
+  \end{equation}
+  where $t \in \RR$ and $r\geq 0$.  (Strictly speaking,
+  the coordinate system breaks down whenever $r=0$ or $\phi = 0$.)  We will use the
+  shorthand $h = d\theta^2 + \sin^2\theta d\phi^2$ for the round
+  metric on the unit sphere in $\RR^3$, since the sphere will not play
+  a huge rôle in the discussion.
+
+  \begin{parts}
+  \part Define \sttl{retarded} $u=t-r$ and \sttl{advanced} $v=t+r$
+    coordinates.  Since $r \geq 0$, we have that $u,v \in \RR$ with $v
+    \geq u$.  \doit{Rewrite} the Minkowski metric
+    \eqref{eq:mink-polar} in these coordinates.
+
+    \begin{solution}
+      This is a simple coordinate substitution and we obtain
+      \begin{equation*}
+        - du dv + \tfrac14 (v-u)^2 h, \qquad\text{with $v \geq u$.}
+      \end{equation*}
+    \end{solution}
+
+    \part Now let us ``compactify'' the range of the $u,v$ coordinates
+      by $u= \tan U$ and $v = \tan V$, where now $U,V \in
+      (-\tfrac\pi2,\tfrac\pi2)$.  \doit{Show} that the Minkowski metric in
+      these coordinates is given by
+      \begin{equation*}
+        g = \frac{1}{4 \cos^2 U \cos^2 V} \left(-4 dU dV +
+          \sin^2(V-U) h \right), \qquad\text{with $V \geq U$.}
+      \end{equation*}
+
+      \begin{solution}
+        This is again just a simple coordinate substitution.  The only
+        tricky thing is the range of coordinates.  Notice that, since
+        $\der{\tan x}{x} = 1 + \tan^2 x \geq 1$, $\tan$ is a
+        monotonically increasing function, hence $\tan V \geq \tan U$
+        if and only if $V \geq U$.
+      \end{solution}
+
+      \begin{EnvUplevel}
+        Now we define the conformally related metric $\hat g =
+        e^{2\omega} g$, where $e^{\omega} = 2\cos U \cos V$:
+        \begin{equation*}
+          \hat g  = -4 dU dV + \sin^2(V-U) h, \qquad\text{with $V \geq U$.}
+        \end{equation*}
+        Notice that whereas the metric $g$ is singular if either $U$
+        or $V$ equals $\pm\frac\pi2$, the metric $\hat g$ is regular
+        there.
+      \end{EnvUplevel}
+
+    \part Change coordinates from $(U,V)$ to $(R,T)$, where $T= V+U
+      \in (-\pi,\pi)$ and $R = V-U \in (0,\pi)$ and \doit{show} that the
+      metric $\hat g$ becomes
+      \begin{equation*}
+        \hat g = -dT^2 + dR^2 + \sin^2R\ h.
+      \end{equation*}
+      Notice that the metric extends smoothly to all real values of $T$.
+
+      \begin{solution}
+        This is again just a simple coordinate substitution and the
+        ranges of $R,T$ are clear.
+      \end{solution}
+
+    \part \doit{Show} that the spatial metric $dR^2 + \sin^2 R \ h$ is the
+      round metric on the three-dimensional unit sphere $S^3 \subset
+      \RR^4$.\\
+      (\emph{Hint}: The round metric on the unit sphere is obtained by
+      pulling back the euclidean metric on $\RR^4$.  Compare with
+      Example~\ref{xm:round-metric-s2} in the lecture notes.)
+
+      \begin{solution}
+        In the $(R,\theta,\phi)$ coordinate system, the spatial
+        metric is
+        \begin{equation*}
+          dR^2 + \sin^2 R d\theta^2 + \sin^2R \sin^2\theta
+          d\phi^2,
+        \end{equation*}
+        which is the pull-back of the euclidean metric on $\RR^4$
+        \begin{equation*}
+          \sum_{i=1}^4 (dx^i)^2
+        \end{equation*}
+        under the embedding
+        \begin{equation*}
+          \begin{split}
+            x^1(R,\theta,\phi) &= \sin R \sin\theta \cos\phi\\
+            x^2(R,\theta,\phi) &= \sin R \sin\theta \sin\phi\\
+            x^3(R,\theta,\phi) &= \sin R \cos\theta\\
+            x^4(R,\theta,\phi) &= \cos R.
+          \end{split}
+        \end{equation*}
+        Notice that $\sum_{i=1} (x^i)^2 = 1$, so that the image of the
+        embedding is (most of) the unit sphere in $\RR^4$.
+      \end{solution}
+
+      \begin{EnvUplevel}
+        This shows that Minkowski spacetime embeds conformally into
+        $\RR \times S^3$, which is called the \sttl{Einstein static
+          universe} $\esu$.
+      \end{EnvUplevel}
+    \end{parts}
+
+  \question The following is a diagram in the $(R,T)$ plane of the
+        image of Minkowski spacetime under the conformal embedding
+        $(M,g) \to (\esu, \hat g)$.  (It is called the \sttl{Penrose
+          diagram} of Minkowski spacetime.)  We have added the
+        \sttl{conformal boundary} consisting of the following subsets of $\esu$:
+
+        \begin{minipage}[t]{0.60\textwidth}
+          \begin{itemize}
+          \item \sttl{future timelike infinity} $i^+$, which is $(R,T)=(0,\pi)$, or $U=\frac\pi2$ and $V=\frac\pi2$;
+          \item \sttl{future null infinity} $\scri^+$, which is $R+T=\pi$, or $V=\frac\pi2$ and $U\in(-\frac\pi2,\frac\pi2)$;
+          \item \sttl{spacelike infinity} $i^0$, which is $(R,T)=(\pi,0)$, or $U=-\frac\pi2$ and $V=\frac\pi2$; 
+          \item \sttl{past null infinity} $\scri^-$, which is $R-T=\pi$, or $U=-\frac\pi2$ and
+            $V\in(-\frac\pi2,\frac\pi2)$; and
+          \item \sttl{past timelike infinity} $i^-$, which is $(R,T)=(0,-\pi)$, or $U=-\frac\pi2$ and $V=-\frac\pi2$.
+          \end{itemize}
+        \end{minipage}
+        \begin{minipage}[t]{0.39\textwidth}
+          \centering
+          \begin{tikzpicture}[x=1.0cm,y=1.0cm,scale=0.7,baseline={(0,2.75)}]
+            \coordinate [label=above right:{$i^+$}] (ip) at (0,2); 
+            \coordinate [label=below right:{$i^-$}] (im) at (0,-2);
+            \coordinate [label=above right:{$i^0$}] (i0) at (2,0);
+            \draw [->,thin,color=gray] (-1,0) -- (3,0) node [black,below right] {$R$};
+            \draw [->,thin,color=gray] (0,-3) -- (0,3) node [black,above left] {$T$};
+            \fill [blue,opacity=0.1] (im) -- (ip) -- (i0) -- cycle;
+            \draw [line width=2pt, color=black] (im) -- (i0) node [midway, right] {$\scri^-$};
+            \draw [line width=2pt, color=black] (i0) -- (ip) node [midway, above right] {$\scri^+$};
+            \foreach \point in {ip,im,i0}
+            \filldraw [color=blue!70!black,fill=blue!50!white] (\point) circle (2pt);
+          \end{tikzpicture}
+        \end{minipage}
+
+        \begin{parts}
+        \part \doit{Show} that whereas $i^0$ and $i^\pm$ are points of
+          $\esu$, $\scri^\pm \subset \esu$ are \sttl{null
+            hypersurfaces} -- i.e.,  three-dimensional submanifolds on
+          which the metric $\hat g$ degenerates.
+
+          \begin{solution}
+            The coordinate $R \in [0,\pi]$ is related to the latitude
+            on the $3$-sphere: $R=0$ is the North pole and $R=\pi$ is
+            the South pole.  The subsets of the $3$-sphere with
+            constant $R \in (0,\pi)$ are $2$-spheres of radius $\sin
+            R$, so that for $R=0,\pi$ they are $2$-spheres of zero
+            radius, i.e., points.  This explains why $i^\pm$ and $i^0$
+            are points.
+
+            The points on $\scri^\pm$ with fixed values of $(R,T)$ are
+            actually $2$-spheres with radius $\sin R$.  As $(R,T)$
+            vary in $\scri^\pm$ we get a one-parameter family of
+            $2$-spheres of radii $\sin(\pm T)$ for $\pm T \in (0,\pi)$.
+            Therefore they are hypersurfaces (i.e., codimension-one
+            submanifolds) of $\esu$.
+
+            To work out the metric $\hat g$ on $\scri^\pm$, we
+            parametrise $\scri^\pm$ by $(T,\theta,\phi)$, where $R=\pi
+            \mp T$.  We see that $dR = \mp dT$ and hence $-dT^2 + dR^2
+            = 0$.  The metric $\hat g$ then reduces to
+            \begin{equation*}
+             \left.\hat g \right|_{\scri^\pm} = \sin^2 T (d\theta^2 + \sin^2\theta d\phi^2),
+            \end{equation*}
+            which is clearly degenerate since, e.g., $\pder{~}{T}$ is
+            orthogonal to every tangent vector.
+          \end{solution}
+
+        \part \doit{Show} that null geodesics of $(M,g)$ end at
+          $\scri^\pm$.  You may restrict yourself to ``radial'' null
+          geodesics, for which the spherical coordinates $\theta,\phi$
+          are constant.  Also recall that in Question 2(b) you showed
+          that conformally related metrics share the same null
+          geodesics.
+
+          \begin{solution}
+            A radial null geodesic in $(M,g)$ is
+            a null geodesic in $(\esu,\hat g)$ which only involves the
+            $(R,T)$ coordinates, so that $\dot\gamma$ lives in the
+            span of $\pder{~}{R}$ and $\pder{~}{T}$.  Being null,
+            $\dot\gamma$ is proportional to $\pder{~}{R} \pm
+            \pder{~}{T}$, so the image of $\gamma$ is a straight line
+            segment at 45\textdegree\ to the $T$ axis.  If they
+            are future-pointing (i.e., if the coefficient of
+            $\pder{~}{T}$ is positive), they will eventually hit
+            $\scri^+$, whereas if they are past-pointing (i.e., if the
+            coefficient of $\pder{~}{T}$ is negative), they will
+            eventually hit $\scri^-$.  In summary, any radial null
+            geodesic hits either of $\scri^\pm$.  These hypersurfaces
+            are at ``infinity'' in $(M,g)$ and will take an infinite
+            amount of affine time to get there.  The conformal
+            embedding of $(M,g)$ into $(\esu,\hat g)$ brings them to a
+            finite ``distance''.
+          \end{solution}
+
+          
+        \part \doit{Show} that $i^0$ is the endpoint of spacelike
+          geodesics in $(M,g)$ and \doit{show} that $i^\pm$ are the
+          endpoints of timelike geodesics in $(M,g)$.  Notice that
+          $(M,g)$ and $(\esu,\hat g)$ do not have the same non-null
+          geodesics, so you cannot just argue by looking at geodesics
+          in $(\esu,\hat g)$.  On the other hand, symmetry
+          considerations guarantee that it is enough to consider the
+          timelike geodesic with $\dot\gamma = \pder{~}{t}$ and the
+          spacelike geodesic with $\dot\gamma = \pder{~}{z}$, say.
+        \end{parts}
+
+        \begin{solution}
+          Let $\lambda$ denote the affine parameter of the geodesic
+          and let $\dot\gamma = \gamma_*(\der{~}{\lambda})$.  For the
+          timelike geodesic with $\dot\gamma = \pder{~}{t}$, we have
+          that the geodesic has coordinates $(t_0+ \lambda, r_0,
+          \theta_0, \phi_0)$, so that $u(\lambda) = \lambda + t_0 -
+          r_0$ and $v(\lambda) = \lambda + t_0 + r_0$.  In the limit
+          $\lambda \to \infty$, $u,v \to \infty$ so that $U,V \to
+          \tfrac\pi2$.  In other words, $\gamma \to i^+$.  Similarly,
+          in the limit $\lambda \to -\infty$, $\gamma \to i^-$.
+
+          The geodesic with $\dot\gamma = \pder{~}{z}$ has coordinates
+          $(t_0, x_0, y_0, z_0 + \lambda)$.  Then
+          \begin{equation*}
+            \begin{split}
+              u(\lambda) &= t_0 - \sqrt{x_0^2 + y_0^2 + (z_0 + \lambda)^2}\\
+              v(\lambda) &= t_0 + \sqrt{x_0^2 + y_0^2 + (z_0 + \lambda)^2},
+            \end{split}
+          \end{equation*}
+          so as $\lambda \to \pm \infty$, we have that
+          $u \to -\infty$ and $v \to \infty$, or equivalently, $(U,V)
+          \to (-\frac\pi2,\frac\pi2)$.  In other words, $\gamma \to
+          i^0$.
+        \end{solution}
+
+      \begin{EnvUplevel}
+        In this example, the Minkowski metric $g$ is known as the
+        \sttl{physical metric} in the GR literature, whereas the
+        metric $\hat g$ in $\esu$ is known as the \sttl{unphysical
+          metric}.  The metric $\hat g$ is not unique, since we could
+        have used a different function $\omega$ to rescale $g$.
+        Nevertheless one can show that the conformal boundary is
+        intrinsic to $(M,g)$.
+      \end{EnvUplevel}
+\end{questions}
+
+\end{document}
+
+
+% Local Variables:
+% coding: utf-8
+% mode: LaTeX
+% TeX-command-default: "XeLaTeX"
+% TeX-engine: "xetex"
+% TeX-master: t
+% End:
+
